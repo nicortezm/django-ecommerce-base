@@ -1,0 +1,39 @@
+{% extends "core/main-template.html" %}
+{% block title %}Ecommerce - Cart{% endblock %}
+
+{% block content %}
+{% load static %}
+<table id="tbl-products" class="table" style="max-width:1020px;margin: auto;">
+  <caption>Products in the cart</caption>
+  <thead>
+    <tr>
+      <th scope="col">PRODUCT</th>
+      <th scope="col">QUANTY</th>
+      <th scope="col">PRICE</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for product in products %}
+    <tr>
+      <td>
+        <figure class="figure">
+          <img src="{{ product.imagen.url }}" style="max-width: 150px; max-height: 150px;" class="img-thumbnail" alt="{{ product.descripcion}}">
+          <figcaption class="figure-caption text-center">{{product.product}}</figcaption>
+          <figcaption class="figure-caption text-center">{{product.description}}</figcaption>
+        </figure>
+      </td>
+      <td>1</td>
+      <td>{{product.precio}}</td>
+      {% endfor %}
+    </tr>
+    <form id='frm-pay' name="pay" action="/webpay-plus-create" method="GET">{% csrf_token %}
+      <tr>
+        <td></td>
+        <td><strong>Total</strong></td>
+        <td><strong>{{total}}</strong><input id='txt-total' name="total" hidden value="{{total}}" /></td>
+        <td><button class="alert alert-primary">PAY</button></td>
+      </tr>
+    </form>
+  </tbody>
+</table>
+{% endblock %}
